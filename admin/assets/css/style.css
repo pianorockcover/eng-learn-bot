@@ -1,0 +1,76 @@
+body.auth-page {
+	background-color: #48515b;
+	background-image: url(../img/bg.png);
+}
+
+.page-wrapper {
+	margin-top: 70px;
+}
+
+.server-error {
+    display: block;
+    color: #e74c3c;
+    font-size: 14px;
+    text-align: left;
+    margin-top: 5px;
+}
+
+.auth-form-wrapper {
+	background: #fff;
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: center;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.auth-form-wrapper h1 {
+	margin-top: 0px;
+	margin-bottom: 40px;
+    font-size: 33px;
+}
+
+.get-new-pass {
+	margin-top: 20px;
+	text-align: left;
+	display: block;
+}
+
+.powered-by {
+	color: #fff;
+    margin-top: 10px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.powered-by a {
+	color: #fff;
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+.powered-by a img {
+	max-width: 33px;
+}
+
+footer {
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    background: #f8f8f8;
+    border-top: 1px solid #ecf0f1;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: right;
+}
+
+footer .copyright {
+	color: #2c3e50;
+    font-weight: bold;
+}
+
+footer .copyright img {
+	max-width: 27px;
+}

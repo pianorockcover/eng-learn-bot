@@ -1,0 +1,27 @@
+{
+  "name": "frontend-project-template",
+  "authors": [
+    "pianorockcover <pianorockcover@gmail.com>"
+  ],
+  "description": "It's a tempalte for future frontend projecs",
+  "main": "index.php",
+  "keywords": [
+    "bootstrap",
+    "less",
+    "html",
+    "js"
+  ],
+  "license": "MIT",
+  "homepage": "index.php",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "less": "^2.6.1",
+    "bootstrap": "*"
+  }
+}
