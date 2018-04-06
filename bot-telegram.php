@@ -22,9 +22,7 @@
 		    $message = $serviceMess;
 		} else {
 		    $result = $telegram->getWebhookUpdates();
-		    // $result = json_decode('{"update_id":739919848,"message":{"message_id":774,"from":{"id":302129580,"is_bot":false,"first_name":"Nikita","last_name":"Pavlyuk","username":"NikitaP23","language_code":"ru-RU"},"chat":{"id":302129580,"first_name":"Nikita","last_name":"Pavlyuk","username":"NikitaP23","type":"private"},"date":1507649764,"text":"\/start","entities":[{"offset":0,"length":6,"type":"bot_command"}]}}', true);
-
-		    // file_put_contents('logs/telegram.txt', json_encode($result), FILE_APPEND | LOCK_EX);
+		    
 
 			$message = $result["message"]["text"];
 		    
