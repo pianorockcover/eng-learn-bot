@@ -2,19 +2,19 @@
 	$config = [
 		'db' => [
 			'host' => 'localhost:3306',
-			'name' => 'cv18240_test',
-			'user' => 'cv18240_test',
-			'password' => 'libertysuck',
+			'name' => 'rapme86740_ebot',
+			'user' => 'rapme86740_ebot',
+			'password' => 'rzEff9S8',
 		],
 
 		'memory-table' => [
-			'name' => 'emoji_bot_bot',
+			'name' => 'bot',
 		],
 
 		/* Telegram config */
 		'telegram-config' => [
-			'token' => '472781101:AAHuXNyfRdWvu60Ldv6V6mRkQxH2yv4xCZw',
-			'webhook-url' => 'https://test.njdstudio.com/kit-new/bot-telegram.php',
+			'token' => '',
+			'webhook-url' => 'https://test.rap-me.online/eng-bot/bot-telegram.php',
 		],
 
 		/* Viber config */
