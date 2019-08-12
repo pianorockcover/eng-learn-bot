@@ -7,8 +7,6 @@
 	include 'strategies/strategies.php';
 	include 'config.php';
 
-	// file_put_contents('telegram.txt', '!!!');
-
 	try {
 	    $telegram = new Api($config['telegram-config']['token']); 
 	    
@@ -22,9 +20,9 @@
 		    $message = $serviceMess;
 		} else {
 		    $result = $telegram->getWebhookUpdates();
-		    
-
 			$message = $result["message"]["text"];
+			// $message = "test";
+			// file_put_contents("telegram_log", json_encode($result));
 		    
 		    $params = [
 		    	'name' => $result["message"]["from"]['first_name'],
@@ -48,12 +46,12 @@
 
 		foreach ($replies as $reply) {
 			if (count($reply->keyboard['inline_keyboard'])) {
-				$reply_markup = $telegram->replyKeyboardMarkup([
+				$reply_markup = json_encode([
 					'inline_keyboard' => $reply->keyboard['inline_keyboard'], 
 				]);
 			} else {
 				if (count($reply->keyboard['keyboard'])) {
-					$reply_markup = $telegram->replyKeyboardMarkup([
+					$reply_markup = json_encode([
 						'keyboard' => $reply->keyboard['keyboard'], 
 						'resize_keyboard' => true, 
 						'one_time_keyboard' => true,
@@ -122,9 +120,9 @@
 	} catch (\Exception $e) {
 		$logDir = 'logs';
 		if (!file_exists('logs')) {
-			$logDir = '../logs';
+			$logDir = 'logs';
 		}
 
-		file_put_contents($logDir.'/telegram.txt', date('d.m.Y H:i')."\t".$e->getMessage()."\t".$e->getFile()."\t".$e->getLine()."\n", FILE_APPEND | LOCK_EX);
+		file_put_contents('telegram_log.txt', date('d.m.Y H:i')."\t".$e->getMessage()."\t".$e->getFile()."\t".$e->getLine()."\n", FILE_APPEND | LOCK_EX);
 	}
 

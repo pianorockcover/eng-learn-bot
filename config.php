@@ -13,7 +13,7 @@
 
 		/* Telegram config */
 		'telegram-config' => [
-			'token' => '',
+			'token' => '880063171:AAEuavsRNKIchYfEn0bY6iYwZLtUFaBGnWc',
 			'webhook-url' => 'https://test.rap-me.online/eng-bot/bot-telegram.php',
 		],
 

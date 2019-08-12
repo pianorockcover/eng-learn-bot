@@ -1,7 +1,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>NJDBotFramework Debug Console</title>
+	<title>Bot Debug Console</title>
 
 	<style>
 		body {
@@ -51,7 +51,7 @@
 	</style>
 </head>
 <body>
-	<b class="console-title">NJDBot Framework Debug Console</b>
+	<b class="console-title">Bot Debug Console</b>
 	<form action="bot-debug.php" method="POST">
 		<textarea name="message" cols="100" placeholder="Type your message here"></textarea>
 		<br>

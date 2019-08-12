@@ -17,7 +17,7 @@ class Error extends Controller
 	public static function cantIdentify($message, $memory) 
 	{
 		$reply = new Reply();
-		$reply->textTelegram = "Ваше сообщение не удалось распознать!😞 Попробуйте еще раз!";
+		$reply->textTelegram = "Bad request!😞 Try to use keyboard or type /start!";
 		$reply->textViber = $reply->textTelegram;
 		$reply->textVk = $reply->textTelegram;
 

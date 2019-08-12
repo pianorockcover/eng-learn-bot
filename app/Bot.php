@@ -81,9 +81,12 @@ class Bot
 		$memArray = (array)$memory;
 		unset($memArray['user_id']);
 
+
 		\QB::table(Memory::$memoryTable)
 					->where('user_id', $memory->user_id)
 					->update($memArray);
+		// var_dump($memArray);
+		// exit();
 
 		return $result;
 	}

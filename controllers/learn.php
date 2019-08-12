@@ -13,24 +13,22 @@ use controllers\Main;
 
 class Learn extends Controller
 {
-	private static $learnCommand = "/learn";
-	private static $translateCommand = "/translate";
-	private static $reverseTranslateCommand = "/reverse";
-
 	private static $keyboard = [
-		"next" => [[
-				"text" => "Next",
-				"callback_data" => static::$learnCommand,
-			]],
-		"translate" => [[
-				"text" => "Translate",
-				"callback_data" => static::$translateCommand,
-			]],
-		"reverse" => [[
-			"text" => "Reverse translate",
-				"callback_data" => static::$reverseCommand,
-			]]
+		'next' => [
+			'text' => 'Next ➡',
+			'callback_data' => "/next",
+		],
+		'translate' => [
+			'text' => 'Translate',
+			'callback_data' => "/translate",
+		],
+		'reverse' => [
+			'text' => 'Reverse translate',
+			'callback_data' => "/reverse",
+		],
 	];
+
+	private static $translatorLink = "https://translate.google.com/?uact=5&um=1&ie=UTF-8&hl=ru&client=tw-ob#auto/ru/";
 
 	public static function next($message, &$memory) {
 		$theme = DataMapper::get("theme", $memory->theme_id);
@@ -40,22 +38,33 @@ class Learn extends Controller
 			return Main::menu("", $memory);
 		}
 
-		$word = $words[$memory->memory_id];
+		$word = $words[$memory->word_id];
 
 		$reply = new Reply();
-		$reply->textTelegram = $word[0]." - ".$word[1]." - ".$word[2];
 
-		$reply->keyboard['inline_keyboard'] = [$keyboard["next"],$keyboard["translate"],$keyboard["reverse"]];
+		if ($memory->mode == "LEARN") {
+			$reply->textTelegram = "*$word[0]* - \[$word[1]] — $word[2]";
 
-		if ($memory->mode_id == 2) {
-			$reply->keyboard['inline_keyboard'] = [$keyboard["next"],$keyboard["translate"],];
+			$reply->keyboard['inline_keyboard'] = [
+				[[
+					'text' => '🔊 listen',
+					'url' => static::$translatorLink.$word[0],
+				],
+				static::$keyboard["next"],]
+			];
+
+			$memory->word_id = $memory->word_id + 1;
 		}
 
-		if ($memory->mode_id == 3) {
-			$reply->keyboard['inline_keyboard'] = [$keyboard["next"],$keyboard["reverse"],];
-		} 
+		if ($memory->mode == "TRANSLATE") {
+			$reply->textTelegram = $word[0];
+			$reply->keyboard['inline_keyboard'] = [[static::$keyboard["translate"]]];
+		}
 
-		$memory->word_id = ($memory->word_id == 0 ? -1 : $memory->word_id) + 1;
+		if ($memory->mode == "REVERSE_TRANSLATE") {
+			$reply->textTelegram = $word[2];
+			$reply->keyboard['inline_keyboard'] = [[static::$keyboard["reverse"]]];
+		} 
 
 		return [$reply];
 	}
@@ -68,16 +77,19 @@ class Learn extends Controller
 			return Main::menu("", $memory);
 		}
 
-		$word = $words[$memory->memory_id];
+		$word = $words[$memory->word_id];
 
 		$reply = new Reply();
-		$reply->textTelegram = $word[0]." - ".$word[1]." - ".$word[2];
 
-		if ($message == $reverseTranslateCommand) {
-			$reply->textTelegram = $word[2]." - ".$word[1]." - ".$word[0];			
+		$reply->textTelegram = $word[2];
+		$reply->keyboard['inline_keyboard'] = [[static::$keyboard["next"],]];
+
+		if ($memory->mode == "REVERSE_TRANSLATE") {
+			$reply->textTelegram = $word[0];
 		}
 
-		$reply->keyboard['inline_keyboard'] = [$keyboard["next"]];
+
+		$memory->word_id = $memory->word_id + 1;
 
 		return [$reply];
 	}

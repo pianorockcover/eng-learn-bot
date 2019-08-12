@@ -2,7 +2,7 @@
 
 $strategies = [
 	[
-		'message' => '', 
+		'message' => ['/start'], 
 		'memory-conditions' => [
 			'$memory->theme_id == 0',
 			'$memory->mode_id == 0',
@@ -19,6 +19,14 @@ $strategies = [
 		'handler' => [
 			'controller' => 'Main',
 			'action' => 'theme', 
+		],
+	],
+	[
+		'message' => ['/mode'], 
+		'memory-conditions' => [],
+		'handler' => [
+			'controller' => 'Main',
+			'action' => 'mode', 
 		],
 	],
 	[
@@ -42,7 +50,7 @@ $strategies = [
 		'memory-conditions' => [],
 		'handler' => [
 			'controller' => 'Learn',
-			'action' => 'reverse', 
+			'action' => 'translate', 
 		],
 	],
 ];

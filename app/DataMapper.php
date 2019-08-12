@@ -1,7 +1,7 @@
 <?php
 namespace app;
 
-class Model
+class DataMapper
 {
 	public static function get($table, $id = false) {
 		if ($id) {
