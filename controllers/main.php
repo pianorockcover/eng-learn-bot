@@ -44,22 +44,20 @@ class Main extends Controller
 		$reply = new Reply();
 		$reply->textTelegram = "Choose mode:";
 
-		$reply->keyboard['inline_keyboard'] = [];
-
-		$reply->keyboard['inline_keyboard'][] = [[
-			'text' => "Изучение",
-			'callback_data' => static::$modeCommand."1",
-		]];
-
-		$reply->keyboard['inline_keyboard'][] = [[
-			'text' => "Перевод",
-			'callback_data' => static::$modeCommand."2",
-		]];
-
-		$reply->keyboard['inline_keyboard'][] = [[
-			'text' => "Обратный перевод",
-			'callback_data' => static::$modeCommand."3",
-		]];
+		$reply->keyboard['inline_keyboard'] = [
+			[[
+				'text' => "Изучение",
+				'callback_data' => static::$modeCommand."1",
+			]],
+			[[
+				'text' => "Перевод",
+				'callback_data' => static::$modeCommand."2",
+			]],
+			[[
+				'text' => "Обратный перевод",
+				'callback_data' => static::$modeCommand."3",
+			]]
+		];
 
 		$memory->theme_id = str_replace(static::$themeCommand, "", $message);
 		$memory->mode_id = 0;
@@ -73,8 +71,6 @@ class Main extends Controller
 		$memory->mode_id = str_replace(static::$modeCommand, "", $message);
 		$memory->word_id = 0;
 
-		$method = "mode".$memory->mode_id;
-
-		return Learn::$method("", $memory);
+		return Learn::next("", $memory);
 	}
 }	

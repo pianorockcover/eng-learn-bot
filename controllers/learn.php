@@ -9,72 +9,76 @@ use app\DataMapper;
 use models\Root;
 use models\Photo;
 use controllers\Error;
-use controllers\Learn;
+use controllers\Main;
 
-class Main extends Controller
+class Learn extends Controller
 {
-	private static $themeCommand = "/theme";
-	private static $modeCommand = "/mode";
+	private static $learnCommand = "/learn";
+	private static $translateCommand = "/translate";
+	private static $reverseTranslateCommand = "/reverse";
 
-	public static function menu($message, &$memory) 
-	{
-		$themes = DataMapper::get("theme");
+	private static $keyboard = [
+		"next" => [[
+				"text" => "Next",
+				"callback_data" => static::$learnCommand,
+			]],
+		"translate" => [[
+				"text" => "Translate",
+				"callback_data" => static::$translateCommand,
+			]],
+		"reverse" => [[
+			"text" => "Reverse translate",
+				"callback_data" => static::$reverseCommand,
+			]]
+	];
 
-		$reply = new Reply();
-		$reply->textTelegram = "Choose theme:";
+	public static function next($message, &$memory) {
+		$theme = DataMapper::get("theme", $memory->theme_id);
+		$words = json_decode($theme->words);
 
-		$reply->keyboard['inline_keyboard'] = [];
-
-		foreach ($themes as $theme) {
-			$reply->keyboard['inline_keyboard'][] = [[
-				'text' => $theme->name,
-				'callback_data' => static::$themeCommand.$theme->theme_id,
-			]];
+		if (!isset($words[$memory->word_id])) {
+			return Main::menu("", $memory);
 		}
 
-		$memory->theme_id = 0;
-		$memory->mode_id = 0;
-		$memory->word_id = 0;
+		$word = $words[$memory->memory_id];
 
-		return [$reply];
-	}
-
-	public static function theme($message, &$memory) 
-	{
 		$reply = new Reply();
-		$reply->textTelegram = "Choose mode:";
+		$reply->textTelegram = $word[0]." - ".$word[1]." - ".$word[2];
 
-		$reply->keyboard['inline_keyboard'] = [];
+		$reply->keyboard['inline_keyboard'] = [$keyboard["next"],$keyboard["translate"],$keyboard["reverse"]];
 
-		$reply->keyboard['inline_keyboard'][] = [[
-			'text' => "Изучение",
-			'callback_data' => static::$modeCommand."1",
-		]];
+		if ($memory->mode_id == 2) {
+			$reply->keyboard['inline_keyboard'] = [$keyboard["next"],$keyboard["translate"],];
+		}
 
-		$reply->keyboard['inline_keyboard'][] = [[
-			'text' => "Перевод",
-			'callback_data' => static::$modeCommand."2",
-		]];
+		if ($memory->mode_id == 3) {
+			$reply->keyboard['inline_keyboard'] = [$keyboard["next"],$keyboard["reverse"],];
+		} 
 
-		$reply->keyboard['inline_keyboard'][] = [[
-			'text' => "Обратный перевод",
-			'callback_data' => static::$modeCommand."3",
-		]];
-
-		$memory->theme_id = str_replace(static::$themeCommand, "", $message);
-		$memory->mode_id = 0;
-		$memory->word_id = 0;
+		$memory->word_id = ($memory->word_id == 0 ? -1 : $memory->word_id) + 1;
 
 		return [$reply];
 	}
 
-	public static function mode($message, &$memory) 
-	{
-		$memory->mode_id = str_replace(static::$modeCommand, "", $message);
-		$memory->word_id = 0;
+	public static function translate($message, &$memory) {
+		$theme = DataMapper::get("theme", $memory->theme_id);
+		$words = json_decode($theme->words);
 
-		$method = "mode".$memory->mode_id;
+		if (!isset($words[$memory->word_id])) {
+			return Main::menu("", $memory);
+		}
 
-		return Learn::$method("", $memory);
+		$word = $words[$memory->memory_id];
+
+		$reply = new Reply();
+		$reply->textTelegram = $word[0]." - ".$word[1]." - ".$word[2];
+
+		if ($message == $reverseTranslateCommand) {
+			$reply->textTelegram = $word[2]." - ".$word[1]." - ".$word[0];			
+		}
+
+		$reply->keyboard['inline_keyboard'] = [$keyboard["next"]];
+
+		return [$reply];
 	}
 }	

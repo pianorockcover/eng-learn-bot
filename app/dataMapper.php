@@ -7,7 +7,7 @@ class Model
 		if ($id) {
 			return \QB::table($table)
 							->where($table."_id", $id)
-							->get();
+							->get()[0];
 		}
 
 		return \QB::table($table)

@@ -2,33 +2,47 @@
 
 $strategies = [
 	[
-		'message' => ['📍 Дернуть за рычаг!'], 
+		'message' => '', 
+		'memory-conditions' => [
+			'$memory->theme_id == 0',
+			'$memory->mode_id == 0',
+			'$memory->word_id == 0',
+		],
+		'handler' => [
+			'controller' => 'Main',
+			'action' => 'menu', 
+		],
+	],
+	[
+		'message' => ['/theme'], 
 		'memory-conditions' => [],
 		'handler' => [
 			'controller' => 'Main',
-			'action' => 'result', 
+			'action' => 'theme', 
 		],
 	],
 	[
-		'message' => '', 
-		'memory-conditions' => [
-			'$memory->sayed_hello == 0',
-		],
+		'message' => ['/next'], 
+		'memory-conditions' => [],
 		'handler' => [
-			'controller' => 'Main',
-			'action' => 'sayHello', 
+			'controller' => 'Learn',
+			'action' => 'next', 
 		],
 	],
-
 	[
-		'message' => '', 
-		'memory-conditions' => [
-			'$memory->sayed_hello == 1',
-		],
+		'message' => ['/translate'], 
+		'memory-conditions' => [],
 		'handler' => [
-			'controller' => 'Main',
-			'action' => 'result', 
+			'controller' => 'Learn',
+			'action' => 'translate', 
 		],
 	],
-
+	[
+		'message' => ['/reverse'], 
+		'memory-conditions' => [],
+		'handler' => [
+			'controller' => 'Learn',
+			'action' => 'reverse', 
+		],
+	],
 ];
