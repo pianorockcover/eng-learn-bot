@@ -21,7 +21,7 @@ class Main extends Controller
 		$themes = DataMapper::get("theme");
 
 		$reply = new Reply();
-		$reply->textTelegram = "First, choose theme:";
+		$reply->textTelegram = "Yo!😊🖖🏻 \n\nFirst, choose theme:";
 
 		$reply->keyboard['inline_keyboard'] = [];
 
@@ -50,11 +50,11 @@ class Main extends Controller
 				'callback_data' => static::$modeCommand."LEARN",
 			]],
 			[[
-				'text' => "Translate",
+				'text' => "Translate (🇷🇺 to 🇬🇧)",
 				'callback_data' => static::$modeCommand."TRANSLATE",
 			]],
 			[[
-				'text' => "Reverse translate",
+				'text' => "Reverse translate (🇬🇧 to 🇷🇺)",
 				'callback_data' => static::$modeCommand."REVERSE_TRANSLATE",
 			]]
 		];
