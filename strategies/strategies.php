@@ -2,7 +2,7 @@
 
 $strategies = [
 	[
-		'message' => ['/start'], 
+		'message' => ['/start', '⬅️ Back'], 
 		'memory-conditions' => [
 			'$memory->theme_id == 0',
 			'$memory->mode_id == 0',

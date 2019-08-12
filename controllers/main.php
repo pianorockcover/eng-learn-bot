@@ -21,15 +21,27 @@ class Main extends Controller
 		$themes = DataMapper::get("theme");
 
 		$reply = new Reply();
-		$reply->textTelegram = "Yo!😊🖖🏻 \n\nFirst, choose theme:";
+		$reply->textTelegram = "Yo!😊🖖🏻 \n\nChoose theme:";
 
 		$reply->keyboard['inline_keyboard'] = [];
 
-		foreach ($themes as $theme) {
-			$reply->keyboard['inline_keyboard'][] = [[
-				'text' => "▫️".$theme->name,
-				'callback_data' => static::$themeCommand.$theme->theme_id,
+		foreach($themes as $i => $theme) {
+			if ($i % 2 !== 0) {
+				continue;
+			}
+
+			$button = [[
+				'text' => $themes[$i]->name,
+				'callback_data' => static::$themeCommand.$themes[$i]->theme_id,
 			]];
+
+			if (isset($themes[$i + 1])) {
+				$button[] = [
+					'text' => $themes[$i + 1]->name,
+					'callback_data' => static::$themeCommand.$themes[$i + 1]->theme_id,
+				];
+			}
+			$reply->keyboard['inline_keyboard'][] = $button;
 		}
 
 		$memory->theme_id = null;
@@ -42,7 +54,7 @@ class Main extends Controller
 	public static function theme($message, &$memory) 
 	{
 		$reply = new Reply();
-		$reply->textTelegram = "Next, choose mode:";
+		$reply->textTelegram = "Choose mode:";
 
 		$reply->keyboard['inline_keyboard'] = [
 			[[
@@ -71,6 +83,12 @@ class Main extends Controller
 		$memory->mode = str_replace(static::$modeCommand, "", $message);
 		$memory->word_id = 0;
 
-		return Learn::next("", $memory);
+		$reply = new Reply();
+		$reply->textTelegram = "Let's start:";
+		$reply->keyboard['keyboard'] = [
+			['⬅️ Back'],
+		];
+
+		return [$reply, Learn::next("", $memory)[0]];
 	}
 }	

@@ -28,7 +28,7 @@ class Learn extends Controller
 		],
 	];
 
-	private static $translatorLink = "https://translate.google.com/?uact=5&um=1&ie=UTF-8&hl=ru&client=tw-ob#auto/ru/";
+	private static $translatorLink = "https://translate.google.com/?uact=5&um=1&ie=UTF-8&hl=ru&client=tw-ob#en/ru/";
 
 	public static function next($message, &$memory) {
 		$theme = DataMapper::get("theme", $memory->theme_id);
